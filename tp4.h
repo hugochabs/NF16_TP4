@@ -21,6 +21,8 @@ Arbre* initABR();
 
 Sommet* creerSommet(int cle);
 
+void afficherSommet(Sommet* s);
+
 int vide(Arbre* a);
 
 int insererSommet(Arbre* a, Sommet* s);

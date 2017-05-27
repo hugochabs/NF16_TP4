@@ -2,7 +2,7 @@
 
 Arbre* initABR(){
     Arbre* newABR = malloc(sizeof(Arbre));
-    if(newABR)
+    if(!newABR)
         return NULL;
     newABR->racine=NULL;
     return newABR;
@@ -10,13 +10,17 @@ Arbre* initABR(){
 
 Sommet* creerSommet(int cle){
     Sommet* newS = malloc(sizeof(Sommet));
-    if(newS)
+    if(!newS)
         return NULL;
     newS->val = cle;
     newS->droit = NULL;
     newS->gauche = NULL;
     newS->pere = NULL;
     return newS;
+}
+
+void afficherSommet(Sommet* s){
+    printf("%d", s->val);
 }
 
 /*int vide(Arbre* a){

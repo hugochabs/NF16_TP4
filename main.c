@@ -9,8 +9,9 @@ int main()
     printf("init\n");
     Sommet* s1 = creerSommet(6);
     printf("init\n");
-    insererSommet(a, s1);
-    //printf("%d\n", b);
+    afficherSommet(s1);
+    int b = insererSommet(a, s1);
+    printf("%d\n", b);
 
 
     return 0;
