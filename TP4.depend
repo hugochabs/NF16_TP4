@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1495880373 source:c:\users\hunic\desktop\nf16\tp4\main.c
+	"tp4.h"
+
+1495879574 c:\users\hunic\desktop\nf16\tp4\tp4.h
+	<stdio.h>
+	<stdlib.h>
+
+1495880354 source:c:\users\hunic\desktop\nf16\tp4\tp4.c
+	"tp4.h"
+
