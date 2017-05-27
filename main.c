@@ -14,7 +14,9 @@ int main()
     afficherSommet(s1);
     int b = insererSommet(a, s1);
     int c = insererSommet(a, s2);
-    printf("%d\n", b);
+    int d = insererSommet(a, s3);
+    int e = a->racine->gauche->val;
+    printf("%d\n", d);
 
 
     return 0;

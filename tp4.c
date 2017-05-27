@@ -38,27 +38,26 @@ int insererSommet(Arbre* a, Sommet* s){
 
     //Insertion en feuille
     int cle = s->val;
-    Sommet* temp = a->racine;
-    afficherSommet(temp);
-    while(temp->droit!=NULL && temp->droit!=NULL){
-        if(cle<temp->val){
+    Sommet* temp1 = NULL;
+    Sommet* temp2 = a->racine;
+    afficherSommet(temp2);
+    while(temp2!=NULL){
+        temp1 = temp2;
+        if(cle<temp2->val){
             printf("premier if\n");
-            temp=temp->gauche;
+            temp2=temp2->gauche;
         }
-        else if(cle>temp->val){
-            temp=temp->droit;
+        else if(cle>temp2->val){
+            temp2=temp2->droit;
         }
-        else if(cle==temp->val){
+        else if(cle==temp2->val){
             return 0;
         }
     }
-    if(temp->val>cle){
-        s->pere = temp;
-        temp->droit = s;
-    }
-    else{
-        s->pere = temp;
-        temp->gauche = s;
-    }
+    s->pere=temp1;
+    if(cle>temp1->val)
+        temp1->droit = s;
+    else
+        temp1->gauche = s;
     return 1;
 }
