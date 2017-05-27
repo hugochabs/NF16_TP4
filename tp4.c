@@ -20,7 +20,10 @@ Sommet* creerSommet(int cle){
 }
 
 void afficherSommet(Sommet* s){
-    printf("%d\n", s->val);
+    printf("val : %d\n", s->val);
+    printf("pere : %d\n", s->pere);
+    printf("fils droit : %d\n", s->droit);
+    printf("fils gauche : %d\n", s->gauche);
 }
 
 /*int vide(Arbre* a){
@@ -28,6 +31,21 @@ void afficherSommet(Sommet* s){
         return 0;
     else return 1;
 }*/
+
+Sommet* recherche(Sommet* s, int x){
+    if(s->val==NULL || s->val==x)
+        return s;
+    if(x<s->val){
+        return recherche(s->gauche, x);
+    }
+    if(x>s->val){
+        return recherche(s->droit, x);
+    }
+}
+
+Sommet* successeur(Arbre* a, Sommet* s){
+
+}
 
 int insererSommet(Arbre* a, Sommet* s){
     //Insertion si arbre vide
@@ -40,7 +58,7 @@ int insererSommet(Arbre* a, Sommet* s){
     int cle = s->val;
     Sommet* temp1 = NULL;
     Sommet* temp2 = a->racine;
-    afficherSommet(temp2);
+    //afficherSommet(temp2);
     while(temp2!=NULL){
         temp1 = temp2;
         if(cle<temp2->val){
@@ -61,3 +79,5 @@ int insererSommet(Arbre* a, Sommet* s){
         temp1->gauche = s;
     return 1;
 }
+
+

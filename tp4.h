@@ -23,6 +23,10 @@ Sommet* creerSommet(int cle);
 
 void afficherSommet(Sommet* s);
 
+Sommet* recherche(Sommet* s, int x);
+
+Sommet* successeur(Arbre* a, Sommet* s);
+
 int vide(Arbre* a);
 
 int insererSommet(Arbre* a, Sommet* s);

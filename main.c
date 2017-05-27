@@ -15,6 +15,8 @@ int main()
     int b = insererSommet(a, s1);
     int c = insererSommet(a, s2);
     int d = insererSommet(a, s3);
+    //Sommet* rech = recherche(a->racine, 4);
+    afficherSommet(rech);
     int e = a->racine->gauche->val;
     printf("%d\n", d);
 
