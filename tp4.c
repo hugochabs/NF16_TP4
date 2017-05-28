@@ -1,5 +1,7 @@
 #include "tp4.h"
 
+//--PARTIE A--//
+
 Arbre* initABR(){
     Arbre* newABR = malloc(sizeof(Arbre));
     if(!newABR)
@@ -110,6 +112,20 @@ void afficherArbre(Arbre* a){
         }
         temp = successeur(a, temp);
     }
+}
+
+int tailleABR(Arbre* a){
+    int tArbre = sizeof(Arbre);
+    int tSommet = sizeof(Sommet);
+    int i=0;
+    Sommet* temp = minimum(a->racine);
+    while(temp!=NULL){
+        i++;
+        temp = successeur(a, temp);
+    }
+    int taille = tSommet*i + tArbre;
+    return taille;
+
 }
 
 

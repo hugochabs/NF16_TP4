@@ -26,7 +26,7 @@ int main()
     //afficherSommet(successeur(a, s5));
     afficherArbre(a);
     //int e = a->racine->gauche->val;
-    printf("%d\n", d);
+    printf("%d octets\n", tailleABR(a));
 
 
     return 0;

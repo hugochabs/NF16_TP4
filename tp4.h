@@ -33,4 +33,6 @@ int vide(Arbre* a);
 
 int insererSommet(Arbre* a, Sommet* s);
 
+void afficherArbre(Arbre* a);
+
 #endif // TP4_H_INCLUDED
