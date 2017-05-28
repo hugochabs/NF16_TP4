@@ -23,6 +23,8 @@ Sommet* creerSommet(int cle);
 
 void afficherSommet(Sommet* s);
 
+Sommet* minimum(Sommet* s);
+
 Sommet* recherche(Sommet* s, int x);
 
 Sommet* successeur(Arbre* a, Sommet* s);

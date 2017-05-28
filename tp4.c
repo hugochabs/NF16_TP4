@@ -23,7 +23,7 @@ void afficherSommet(Sommet* s){
     printf("val : %d\n", s->val);
     printf("pere : %d\n", s->pere);
     printf("fils droit : %d\n", s->droit);
-    printf("fils gauche : %d\n", s->gauche);
+    printf("fils gauche : %d\n\n", s->gauche);
 }
 
 /*int vide(Arbre* a){
@@ -32,8 +32,15 @@ void afficherSommet(Sommet* s){
     else return 1;
 }*/
 
+Sommet* minimum(Sommet* s){
+    Sommet* temp = s;
+    while(temp->gauche!=NULL)
+        temp=temp->gauche;
+    return temp;
+}
+
 Sommet* recherche(Sommet* s, int x){
-    if(s->val==NULL || s->val==x)
+    if(s==NULL || s->val==x)
         return s;
     if(x<s->val){
         return recherche(s->gauche, x);
@@ -44,7 +51,17 @@ Sommet* recherche(Sommet* s, int x){
 }
 
 Sommet* successeur(Arbre* a, Sommet* s){
-
+    if(recherche(a->racine, s->val)==NULL)
+        return NULL;
+    if(s->droit!=NULL)
+        return minimum(s->droit);
+    Sommet* temp = s;
+    Sommet* y = s->pere;
+    while(y!=NULL && temp==y->droit){
+        temp=y;
+        y=y->pere;
+    }
+    return y;
 }
 
 int insererSommet(Arbre* a, Sommet* s){
@@ -62,7 +79,7 @@ int insererSommet(Arbre* a, Sommet* s){
     while(temp2!=NULL){
         temp1 = temp2;
         if(cle<temp2->val){
-            printf("premier if\n");
+            //printf("premier if\n");
             temp2=temp2->gauche;
         }
         else if(cle>temp2->val){
@@ -78,6 +95,21 @@ int insererSommet(Arbre* a, Sommet* s){
     else
         temp1->gauche = s;
     return 1;
+}
+
+void afficherArbre(Arbre* a){
+    Sommet* temp = minimum(a->racine);
+    printf("Voici tous les elements de l'arbre %d\n", a);
+    while(temp!=NULL){
+        if(temp->pere==NULL){
+            printf("Voici la racine de l'arbre :\n");
+            afficherSommet(temp);
+        }
+        else{
+            afficherSommet(temp);
+        }
+        temp = successeur(a, temp);
+    }
 }
 
 
