@@ -203,6 +203,13 @@ int insererElement (int cle, ArbreCompact* a) {
             temp->sup++;
             ind = 1;
         }
+
+        else if (temp->inf > cle) {
+            temp = temp->gauche;
+        }
+        else if (temp->sup < cle) {
+            temp = temp->droit;
+        }
     }
 
     if (ind == 0) {
@@ -210,10 +217,10 @@ int insererElement (int cle, ArbreCompact* a) {
         temp = a->racine;
         while (temp != NULL) {
             temp2 = temp;
-            if (temp->inf < cle) {
+            if (temp->inf > cle) {
                 temp = temp->gauche;
             }
-            else if (temp->sup > cle) {
+            else if (temp->sup < cle) {
                 temp = temp->droit;
             }
         }

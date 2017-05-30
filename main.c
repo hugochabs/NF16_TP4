@@ -3,9 +3,8 @@
 
 int main()
 {
-    printf("Hello world!\n");
 
-    Arbre* a = initABR();
+    /*Arbre* a = initABR();
     //printf("init\n");
     Sommet* s1 = creerSommet(6);
     Sommet* s2 = creerSommet(4);
@@ -26,7 +25,19 @@ int main()
     //afficherSommet(successeur(a, s5));
     afficherArbre(a);
     //int e = a->racine->gauche->val;
-    printf("%d octets\n", tailleABR(a));
+    printf("%d octets\n", tailleABR(a));*/
+
+    ArbreCompact* a = initABR();
+    SommetCompact* s1 = creerSommetCompact(25);
+    SommetCompact* s2 = creerSommetCompact(30);
+    SommetCompact* s3 = creerSommetCompact(35);
+
+    insererElement(25, a);
+    insererElement(30, a);
+    insererElement(25, a);
+
+        printf("Hello world!\n");
+
 
 
     return 0;
