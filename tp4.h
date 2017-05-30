@@ -38,8 +38,8 @@ void afficherArbre(Arbre* a);
 //--PARTIE B--//
 
 typedef struct SommetCompact {
-    struct SommetCompact gauche;
-    struct SommetCompact droit;
+    struct SommetCompact* gauche;
+    struct SommetCompact* droit;
     int inf;
     int sup;
     //struct SommetCompact pere; //non indiqué dans le sujet
@@ -47,7 +47,7 @@ typedef struct SommetCompact {
 
 typedef struct ArbreCompact {
     SommetCompact* racine;
-}
+} ArbreCompact;
 
 ArbreCompact* initABRCompact();
 SommetCompact* creerSommetCompact(int cle);

@@ -199,7 +199,7 @@ int insererElement (int cle, ArbreCompact* a) {
             ind = 1;
         }
 
-        else if (temp->suf == cle-1) {
+        else if (temp->sup == cle-1) {
             temp->sup++;
             ind = 1;
         }
