@@ -115,6 +115,10 @@ void afficherArbre(Arbre* a){
 }
 
 int tailleABR(Arbre* a){
+    if (!a->racine) {
+        return sizeof(Arbre)+4;
+    }
+
     int tArbre = sizeof(Arbre);
     int tSommet = sizeof(Sommet);
     int i=0;
@@ -124,8 +128,105 @@ int tailleABR(Arbre* a){
         temp = successeur(a, temp);
     }
     int taille = tSommet*i + tArbre;
+    //int taille = tSommet*i + i*4 + tArbre + 4;
     return taille;
 
 }
 
+
+//Partie B
+
+ArbreCompact* initABRCompact() {
+    ArbreCompact* newABR = malloc(sizeof(ArbreCompact));
+    if(!newABR)
+        return NULL;
+    newABR->racine=NULL;
+    return newABR;
+}
+SommetCompact* creerSommetCompact(int cle) {
+    SommetCompact* newS = malloc(sizeof(SommetCompact));
+    if(!newS)
+        return NULL;
+    newS->inf = cle;
+    newS->sup = cle;
+    newS->droit = NULL;
+    newS->gauche = NULL;
+    return newS;
+}
+
+/*SommetCompact* minimum(SommetCompact* s){
+    SommetCompact* temp = s;
+    while(temp->gauche!=NULL)
+        temp=temp->gauche;
+    return temp;
+}*/
+
+/*SommetCompact* successeur(ArbreCompact* a, SommetCompact* s) {
+    //verif si sommet existe dans arbre
+    if(s->droit!=NULL)
+        return minimum(s->droit);
+    SommetCompact* temp = s;
+    SommetCompact* y = s->pere;
+    while(y!=NULL && temp==y->droit){
+        temp=y;
+        y=y->pere;
+    }
+    return y;
+
+}*/
+
+int insererElement (int cle, ArbreCompact* a) {
+    int ind =0;
+    if (!a) {
+        return -1;
+    }
+
+    if (!a->racine) {
+        SommetCompact* s = creerSommetCompact(cle);
+        a->racine = s;
+        return 1;
+    }
+
+    SommetCompact* temp = a->racine;
+    SommetCompact* temp2 = NULL;
+    while (temp!= NULL && ind == 0) {
+        if ((temp->inf < cle && temp->sup > cle) || temp->inf == cle || temp->sup == cle) {
+            ind = 1;
+        }
+
+        else if (temp->inf == cle+1) {
+            temp->inf--;
+            ind = 1;
+        }
+
+        else if (temp->suf == cle-1) {
+            temp->sup++;
+            ind = 1;
+        }
+    }
+
+    if (ind == 0) {
+        SommetCompact* s = creerSommetCompact(cle);
+        temp = a->racine;
+        while (temp != NULL) {
+            temp2 = temp;
+            if (temp->inf < cle) {
+                temp = temp->gauche;
+            }
+            else if (temp->sup > cle) {
+                temp = temp->droit;
+            }
+        }
+
+        if (temp2->inf > cle) {
+            temp2->gauche = s;
+        }
+        else if (temp2->sup < cle) {
+            temp2->droit = s;
+        }
+    }
+
+    return 1;
+
+}
 

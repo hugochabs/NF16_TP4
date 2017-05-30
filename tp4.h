@@ -35,4 +35,26 @@ int insererSommet(Arbre* a, Sommet* s);
 
 void afficherArbre(Arbre* a);
 
+//--PARTIE B--//
+
+typedef struct SommetCompact {
+    struct SommetCompact gauche;
+    struct SommetCompact droit;
+    int inf;
+    int sup;
+    //struct SommetCompact pere; //non indiqué dans le sujet
+} SommetCompact;
+
+typedef struct ArbreCompact {
+    SommetCompact* racine;
+}
+
+ArbreCompact* initABRCompact();
+SommetCompact* creerSommetCompact(int cle);
+int insererElement (int cle, ArbreCompact* a);
+//Sommet* successeur(Arbre* a, Sommet* s);
+//SommetCompact* minimum(SommetCompact* s);
+
+
+
 #endif // TP4_H_INCLUDED
