@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 //--PARTIE A--//
 
@@ -18,6 +19,7 @@ typedef struct Arbre{
 }Arbre;
 
 Arbre* initABR();
+Arbre* initABR2(int n);
 
 Sommet* creerSommet(int cle);
 
@@ -34,6 +36,7 @@ int vide(Arbre* a);
 int insererSommet(Arbre* a, Sommet* s);
 
 void afficherArbre(Arbre* a);
+Arbre* initABRrand(int n);
 
 //--PARTIE B--//
 
@@ -42,7 +45,7 @@ typedef struct SommetCompact {
     struct SommetCompact* droit;
     int inf;
     int sup;
-    //struct SommetCompact pere; //non indiqué dans le sujet
+    struct SommetCompact* pere; //non indiqué dans le sujet
 } SommetCompact;
 
 typedef struct ArbreCompact {
@@ -52,8 +55,18 @@ typedef struct ArbreCompact {
 ArbreCompact* initABRCompact();
 SommetCompact* creerSommetCompact(int cle);
 int insererElement (int cle, ArbreCompact* a);
-//Sommet* successeur(Arbre* a, Sommet* s);
-//SommetCompact* minimum(SommetCompact* s);
+SommetCompact* successeurC(ArbreCompact* a, SommetCompact* s);
+SommetCompact* minimumC(SommetCompact* s);
+void afficherSommetC(SommetCompact* s);
+void afficherArbreC(ArbreCompact* a);
+SommetCompact* rechercheC(SommetCompact* s, int inf, int sup);
+int tailleABRC(ArbreCompact* a);
+
+ArbreCompact* initABRCompact2(int n);
+ArbreCompact* initABRCrand(int n);
+
+void interface();
+void interfacebis(arbre* a);
 
 
 

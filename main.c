@@ -27,7 +27,7 @@ int main()
     //int e = a->racine->gauche->val;
     printf("%d octets\n", tailleABR(a));*/
 
-    ArbreCompact* a = initABR();
+    /*ArbreCompact* a = initABR();
     SommetCompact* s1 = creerSommetCompact(25);
     SommetCompact* s2 = creerSommetCompact(30);
     SommetCompact* s3 = creerSommetCompact(35);
@@ -36,8 +36,14 @@ int main()
     insererElement(30, a);
     insererElement(25, a);
 
-        printf("Hello world!\n");
+    insererElement(24, a);
+    insererElement(31, a);
+    insererElement(12, a);
 
+    afficherArbreC(a);
+    printf("%d octets\n", tailleABRC(a));*/
+
+    interface();
 
 
     return 0;
