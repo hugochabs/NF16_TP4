@@ -22,10 +22,15 @@ Sommet* creerSommet(int cle){
 }
 
 void afficherSommet(Sommet* s){
+    if (s) {
     printf("val : %d\n", s->val);
     printf("pere : %d\n", s->pere);
     printf("fils droit : %d\n", s->droit);
     printf("fils gauche : %d\n\n", s->gauche);
+    }
+
+    else
+        printf("ce sommet n'existe pas \n");
 }
 
 /*int vide(Arbre* a){
@@ -296,8 +301,12 @@ int insererElement (int cle, ArbreCompact* a) {
 }
 
 void afficherSommetC(SommetCompact* s) {
+    if (!s)
+        printf("ce sommet n'existe pas \n");
+    else {
     printf("inf : %d\n", s->inf);
     printf("sup : %d\n\n", s->sup);
+    }
 }
 
 
@@ -462,14 +471,9 @@ void interfacebisA(Arbre* a){
 }
 
 void interfacebisAC(ArbreCompact* a) {
-    int choix=-1, nb, inf, sup;
+    int choix=-1;
+    int nb, inf, sup;
     SommetCompact* s;
-    printf("Quelles actions voulez-vous effectuer ?  \n");
-    printf("1. inserer un element\n");
-    printf("2. afficher un element de l'arbre\n");
-    printf("3. rechercher un element \n");
-    printf("4. quitter l'interface de l arbre simple \n");
-    scanf("%d", &choix);
 
     while (choix != 3) {
         printf("Quelles actions voulez-vous effectuer ?  \n");
@@ -481,6 +485,7 @@ void interfacebisAC(ArbreCompact* a) {
         case 1:
             printf("entrez la valeur de l'element a ajoute\n");
             scanf("%d", &inf);
+            printf("%d\n", inf);
             insererElement(inf, a);
             afficherArbreC(a);
             break;
