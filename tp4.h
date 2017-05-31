@@ -66,7 +66,8 @@ ArbreCompact* initABRCompact2(int n);
 ArbreCompact* initABRCrand(int n);
 
 void interface();
-void interfacebis(arbre* a);
+void interfacebisA(Arbre* a);
+void interfacebisAC(ArbreCompact* a);
 
 
 

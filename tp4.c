@@ -365,57 +365,137 @@ ArbreCompact* initABRCrand(int n){
 void interface(){
     Arbre* a = NULL;
     ArbreCompact* ac = NULL;
-    int choix, nb;
-    printf("Entrez un choix : \n");
-    printf("1. initialiser un ABR simple\n");
-    printf("2. initialiser un ABR compact\n");
-    printf("3. pre-charger un ABR simple de maniere aleatoire \n");
-    printf("4. pre-charger un ABR compact de maniere aleatoire \n");
-
-    scanf("%d", &choix);
+    int choix=-1, nb;
 
 
-    switch(choix) {
-    case 1 :
-        printf("Combien de sommet voulez-vous inserer : ");
-        scanf("%d", &nb);
-        a = initABR2(nb);
-        afficherArbre(a);
-    case 2:
-        printf("Combien de sommet voulez-vous inserer : ");
-        scanf("%d", &nb);
-        ac = initABRCompact2(nb);
-        afficherArbreC(ac);
+    while (choix != 7) {
+        printf("Entrez un choix : \n");
+        printf("1. initialiser un ABR simple\n");
+        printf("2. initialiser un ABR compact\n");
+        printf("3. pre-charger un ABR simple de maniere aleatoire \n");
+        printf("4. pre-charger un ABR compact de maniere aleatoire \n");
+        printf("5. appeler interface abr simple \n");
+        printf("6. appeler interface abr compact \n");
+        printf("7. Quitter \n");
+        scanf("%d", &choix);
+        switch(choix) {
+        case 1 :
+            printf("Combien de sommet voulez-vous inserer : ");
+            scanf("%d", &nb);
+            a = initABR2(nb);
+            afficherArbre(a);
+            break;
+        case 2:
+            printf("Combien de sommet voulez-vous inserer : ");
+            scanf("%d", &nb);
+            ac = initABRCompact2(nb);
+            afficherArbreC(ac);
+            break;
 
-    case 3:
-        printf("Combien de sommet voulez-vous inserer : ");
-        scanf("%d", &nb);
-        a = initABRrand(nb);
-        afficherArbre(a);
+        case 3:
+            printf("Combien de sommet voulez-vous inserer : ");
+            scanf("%d", &nb);
+            a = initABRrand(nb);
+            afficherArbre(a);
+            break;
 
-    case 4:
-        printf("Combien de sommet voulez-vous inserer : ");
-        scanf("%d", &nb);
-        ac = initABRCrand(nb);
-        afficherArbreC(ac);
+        case 4:
+            printf("Combien de sommet voulez-vous inserer : ");
+            scanf("%d", &nb);
+            ac = initABRCrand(nb);
+            afficherArbreC(ac);
+            break;
+
+        case 5:
+            if(a)
+                interfacebisA(a);
+            else
+                printf("aucun arbre simple n'a ete initialise\n");
+            break;
+
+        case 6:
+            if(ac)
+                interfacebisA(ac);
+            else
+                printf("aucun arbre simple n'a ete initialise\n");
+            break;
+
+        }
     }
 }
 
-void interfacebis(Arbre* a){
-    int choix, nb;
+void interfacebisA(Arbre* a){
+    int choix=-1, nb, cle;
+    Sommet* s;
     printf("Quelles actions voulez-vous effectuer ?  \n");
     printf("1. inserer un element\n");
     printf("2. afficher un element de l'arbre\n");
     printf("3. rechercher un element \n");
+    printf("4. quitter l'interface de l arbre simple \n");
     scanf("%d", &choix);
 
-    switch(choix){
-case 1:
-    {
+    while (choix != 3) {
+        printf("Quelles actions voulez-vous effectuer ?  \n");
+        printf("1. inserer un element\n");
+        printf("2. rechercher et afficher un element \n");
+        printf("3. quitter l'interface de l arbre simple \n");
+        scanf("%d", &choix);
+        switch(choix){
+        case 1:
+            printf("entrez la valeur de l'element a ajoute\n");
+            scanf("%d", &cle);
+            s = creerSommet(cle);
+            insererSommet(a, s);
+            afficherArbre(a);
+            break;
+        case 2:
+            printf("entrez la cle de l'element que vous cherchez\n");
+            scanf("%d", &cle);
+            s = recherche(a->racine, cle);
+            afficherSommet(s);
+            break;
 
-    }
+        }
     }
 
+
+}
+
+void interfacebisAC(ArbreCompact* a) {
+    int choix=-1, nb, inf, sup;
+    SommetCompact* s;
+    printf("Quelles actions voulez-vous effectuer ?  \n");
+    printf("1. inserer un element\n");
+    printf("2. afficher un element de l'arbre\n");
+    printf("3. rechercher un element \n");
+    printf("4. quitter l'interface de l arbre simple \n");
+    scanf("%d", &choix);
+
+    while (choix != 3) {
+        printf("Quelles actions voulez-vous effectuer ?  \n");
+        printf("1. inserer un element\n");
+        printf("2. rechercher et afficher un element \n");
+        printf("3. quitter l'interface de l arbre simple \n");
+        scanf("%d", &choix);
+        switch(choix){
+        case 1:
+            printf("entrez la valeur de l'element a ajoute\n");
+            scanf("%d", &inf);
+            insererElement(inf, a);
+            afficherArbreC(a);
+            break;
+        case 2:
+            printf("entrez la borne inferieur de l'element que vous cherchez\n");
+            scanf("%d", &inf);
+            printf("entrez la borne superieur de l'element que vous cherchez\n");
+            scanf("%d", &sup);
+            s = rechercheC(a->racine, inf, sup);
+            afficherSommetC(s);
+            break;
+
+        }
     }
+
+}
 
 
