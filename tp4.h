@@ -19,7 +19,6 @@ typedef struct Arbre{
 }Arbre;
 
 Arbre* initABR();
-Arbre* initABR2(int n);
 
 Sommet* creerSommet(int cle);
 
@@ -31,13 +30,11 @@ Sommet* recherche(Sommet* s, int x);
 
 Sommet* successeur(Arbre* a, Sommet* s);
 
-int vide(Arbre* a);
-
 int insererSommet(Arbre* a, Sommet* s);
 
 void afficherArbre(Arbre* a);
-Arbre* initABRrand(int n);
 
+int tailleABR(Arbre* a);
 //--PARTIE B--//
 
 typedef struct SommetCompact {
@@ -45,7 +42,7 @@ typedef struct SommetCompact {
     struct SommetCompact* droit;
     int inf;
     int sup;
-    struct SommetCompact* pere; //non indiqué dans le sujet
+    struct SommetCompact* pere;
 } SommetCompact;
 
 typedef struct ArbreCompact {
@@ -53,22 +50,36 @@ typedef struct ArbreCompact {
 } ArbreCompact;
 
 ArbreCompact* initABRCompact();
+
 SommetCompact* creerSommetCompact(int cle);
-int insererElement (int cle, ArbreCompact* a);
-SommetCompact* successeurC(ArbreCompact* a, SommetCompact* s);
+
 SommetCompact* minimumC(SommetCompact* s);
-void afficherSommetC(SommetCompact* s);
-void afficherArbreC(ArbreCompact* a);
+
 SommetCompact* rechercheC(SommetCompact* s, int inf, int sup);
+
+SommetCompact* successeurC(ArbreCompact* a, SommetCompact* s);
+
+int insererElement (int cle, ArbreCompact* a);
+
+void afficherSommetC(SommetCompact* s);
+
+void afficherArbreC(ArbreCompact* a);
+
+SommetCompact* rechercheC(SommetCompact* s, int inf, int sup);
+
 int tailleABRC(ArbreCompact* a);
 
-ArbreCompact* initABRCompact2(int n);
-ArbreCompact* initABRCrand(int n);
+//--INTERFACE--//
 
 void interface();
 void interfacebisA(Arbre* a);
 void interfacebisAC(ArbreCompact* a);
 
+Arbre* initABR2(int n);
+Arbre* initABRrand(int n);
+
+ArbreCompact* initABRCompact2(int n);
+ArbreCompact* initABRCrand(int n);
 
 
 #endif // TP4_H_INCLUDED
