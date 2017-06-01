@@ -187,6 +187,17 @@ SommetCompact* rechercheC(SommetCompact* s, int inf, int sup){
     }
 }
 
+SommetCompact* rechercheCompact(SommetCompact* s, int cle){
+    if(s==NULL || (cle >= s->inf && cle <= s->sup))
+        return s;
+    if(cle <s->inf){
+        return rechercheCompact(s->gauche, cle);
+    }
+    if(cle > s->sup){
+        return rechercheCompact(s->droit, cle);
+    }
+}
+
 SommetCompact* successeurC(ArbreCompact* a, SommetCompact* s) {
     if (!a || !s) {
         return NULL;
@@ -526,9 +537,10 @@ void interfacebisAC(ArbreCompact* a) {
         case 2:
             printf("entrez la borne inferieur de l'element que vous cherchez\n");
             scanf("%d", &inf);
-            printf("entrez la borne superieur de l'element que vous cherchez\n");
+            /*printf("entrez la borne superieur de l'element que vous cherchez\n");
             scanf("%d", &sup);
-            s = rechercheC(a->racine, inf, sup);
+            s = rechercheC(a->racine, inf, sup);*/
+            s = rechercheCompact(a->racine, inf);
             afficherSommetC(s);
             break;
         case 3:

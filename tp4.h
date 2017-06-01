@@ -67,6 +67,8 @@ void afficherArbreC(ArbreCompact* a);
 
 SommetCompact* rechercheC(SommetCompact* s, int inf, int sup);
 
+SommetCompact* rechercheCompact(SommetCompact* s, int cle);
+
 int tailleABRC(ArbreCompact* a);
 
 //--INTERFACE--//
