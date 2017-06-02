@@ -66,7 +66,7 @@ Sommet* successeur(Arbre* a, Sommet* s){
 }
 
 int insererSommet(Arbre* a, Sommet* s){
-    if (!s)
+    if (!s || !a)
         return -1;
 
     //Insertion si arbre vide
@@ -122,7 +122,7 @@ void afficherArbre(Arbre* a){
 
 int tailleABR(Arbre* a){
     if (!a) {
-        return -1;
+        return 0;
     }
 
     if (!a->racine) {
@@ -307,6 +307,9 @@ void afficherArbreC(ArbreCompact* a) {
 }
 
 int tailleABRC(ArbreCompact* a){
+    if (!a)
+        return 0;
+
     if (!a->racine) {
         return sizeof(ArbreCompact);
     }
@@ -402,7 +405,9 @@ ArbreCompact* initABRCrand(int n){
 
 void interface(){
     Arbre* a = NULL;
+    Arbre* a2 = NULL;
     ArbreCompact* ac = NULL;
+    ArbreCompact* ac2 = NULL;
     int choix=-1, nb;
 
 
@@ -424,12 +429,14 @@ void interface(){
             scanf("%d", &nb);
             a = initABR2(nb);
             afficherArbre(a);
+
             break;
         case 2:
             printf("Combien de sommet voulez-vous inserer : ");
             scanf("%d", &nb);
             ac = initABRCompact2(nb);
             afficherArbreC(ac);
+
             break;
 
         case 3:
@@ -480,15 +487,17 @@ void interface(){
 }
 
 void interfacebisA(Arbre* a){
-    int choix=-1, nb, cle, taille;
+    int choix=-1, nb, cle, taille, tailleC;
+    ArbreCompact* ac = NULL;
     Sommet* s;
 
-    while (choix != 4) {
+    while (choix != 5) {
         printf("Quelles actions voulez-vous effectuer ?  \n");
         printf("1. inserer un element\n");
         printf("2. rechercher et afficher un element \n");
-        printf("3. calculer la taille de l'arbre simple \n");
-        printf("4. quitter l'interface de l arbre simple \n");
+        printf("3. convertir l'arbre simple en arbre compact \n");
+        printf("4. comparer la taille de l'arbre simple à un arbre compact \n");
+        printf("5. quitter l'interface de l arbre simple \n");
         scanf("%d", &choix);
         switch(choix){
         case 1:
@@ -504,10 +513,23 @@ void interfacebisA(Arbre* a){
             s = recherche(a->racine, cle);
             afficherSommet(s);
             break;
-
         case 3:
+            if (!ac) {
+                ac = initABRCompact();
+                ac = simpleToCompact(a);
+            }
+            afficherArbreC(ac);
+
+        case 4:
+            if (!ac) {
+                ac = initABRCompact();
+                ac = simpleToCompact(a);
+            }
+            tailleC = tailleABRC(ac);
             taille = tailleABR(a);
-            printf("la taille de votre arbre est de %d \n", taille);
+            printf("la taille de votre ABR simple est de %d \n", taille);
+            printf("la taille de votre ABR compact est de %d \n", tailleC);
+            printf("taille(ABR Simple) - taille(ABR Compact) = %d\n\n", taille-tailleC);
             break;
 
         }
@@ -517,35 +539,47 @@ void interfacebisA(Arbre* a){
 }
 
 void interfacebisAC(ArbreCompact* a) {
-    int choix=-1, nb, inf, sup, taille;
+    int choix=-1, nb, cle, taille, tailleS;
+    Arbre* as = NULL;
     SommetCompact* s;
 
-    while (choix != 4) {
+    while (choix != 5) {
         printf("Quelles actions voulez-vous effectuer ?  \n");
         printf("1. inserer un element\n");
         printf("2. rechercher et afficher un element \n");
-        printf("3. calculer la taille de l'arbre simple \n");
-        printf("4. quitter l'interface de l arbre simple \n");
+        printf("3. convertir l'arbre compact en arbre simple \n");
+        printf("4. comparer la taille de l'arbre compact à un arbre simple \n");
+        printf("5. quitter l'interface de l arbre compact \n");
         scanf("%d", &choix);
         switch(choix){
         case 1:
             printf("entrez la valeur de l'element a ajoute\n");
-            scanf("%d", &inf);
-            insererElement(inf, a);
+            scanf("%d", &cle);
+            insererElement(cle, a);
             afficherArbreC(a);
             break;
         case 2:
-            printf("entrez la borne inferieur de l'element que vous cherchez\n");
-            scanf("%d", &inf);
-            /*printf("entrez la borne superieur de l'element que vous cherchez\n");
-            scanf("%d", &sup);
-            s = rechercheC(a->racine, inf, sup);*/
-            s = rechercheCompact(a->racine, inf);
+            printf("entrez la valeur de l'element que vous cherchez\n");
+            scanf("%d", &cle);
+            s = rechercheCompact(a->racine, cle);
             afficherSommetC(s);
             break;
         case 3:
+            if (!as) {
+                as = initABR();
+                as = compactToSimple(a);
+            }
+            afficherArbre(as);
+        case 4:
+            if (!as) {
+                as = initABR();
+                as = compactToSimple(a);
+            }
+            tailleS = tailleABR(as);
             taille = tailleABRC(a);
-            printf("la taille de votre arbre est de %d \n", taille);
+            printf("la taille de votre ABR compact est de %d \n", taille);
+            printf("la taille de votre ABR simple est de %d \n", tailleS);
+            printf("taille(ABR Compact) - taille(ABR Simple) = %d\n\n", taille-tailleS);
             break;
 
         }
@@ -553,4 +587,39 @@ void interfacebisAC(ArbreCompact* a) {
 
 }
 
+Arbre* compactToSimple (ArbreCompact* ac) {
+    if (!ac || !ac->racine) { //on initialise pas un arbre pour le cas de l'arbre vide car le traitement est sans conséquence
+        return NULL;
+    }
 
+    Arbre* a = initABR();
+    int i, inf, sup;
+    SommetCompact* temp = minimumC(ac->racine);
+    Sommet* s;
+    while(temp != NULL){
+        inf = temp->inf;
+        sup = temp->sup;
+        for (i=inf; i<sup+1; i++) {
+            s = creerSommet(i);
+            insererSommet(a, s);
+        }
+        temp = successeurC(ac, temp);
+    }
+
+    return a;
+}
+
+ArbreCompact* simpleToCompact (Arbre* a) {
+    if (!a || !a->racine) { //on initialise pas un arbre pour le cas de l'arbre vide car on ne s'en servira pas ici
+        return NULL;
+    }
+
+    ArbreCompact* ac = initABRCompact();
+
+    Sommet* temp = minimum(a->racine);
+    while(temp != NULL){
+        insererElement(temp->val, ac);
+        temp = successeur(a, temp);
+    }
+    return ac;
+}
