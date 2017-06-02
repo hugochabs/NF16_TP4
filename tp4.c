@@ -405,9 +405,7 @@ ArbreCompact* initABRCrand(int n){
 
 void interface(){
     Arbre* a = NULL;
-    Arbre* a2 = NULL;
     ArbreCompact* ac = NULL;
-    ArbreCompact* ac2 = NULL;
     int choix=-1, nb;
 
 
@@ -484,6 +482,11 @@ void interface(){
 
         }
     }
+
+    freeSimple(a);
+    a = NULL;
+    freeCompact(ac);
+    ac = NULL;
 }
 
 void interfacebisA(Arbre* a){
@@ -534,7 +537,8 @@ void interfacebisA(Arbre* a){
 
         }
     }
-
+    freeCompact(ac);
+    ac = NULL;
 
 }
 
@@ -585,6 +589,9 @@ void interfacebisAC(ArbreCompact* a) {
         }
     }
 
+    freeSimple(as);
+    as = NULL;
+
 }
 
 Arbre* compactToSimple (ArbreCompact* ac) {
@@ -622,4 +629,39 @@ ArbreCompact* simpleToCompact (Arbre* a) {
         temp = successeur(a, temp);
     }
     return ac;
+}
+
+void freeSimple (Arbre* a) {
+    if (!a)
+        return NULL;
+    if (!a->racine) {
+        free(a);
+    }
+    Sommet* temp = minimum(a->racine);
+    Sommet* a_sup;
+    while(temp != NULL){
+        a_sup = temp;
+        temp = successeur(a, temp);
+        free(a_sup);
+    }
+
+    free(a);
+
+}
+void freeCompact (ArbreCompact* a) {
+    if (!a)
+        return NULL;
+    if (!a->racine) {
+        free(a);
+    }
+    SommetCompact* temp = minimumC(a->racine);
+    SommetCompact* a_sup;
+    while(temp != NULL){
+        a_sup = temp;
+        temp = successeurC(a, temp);
+        free(a_sup);
+    }
+
+    free(a);
+
 }

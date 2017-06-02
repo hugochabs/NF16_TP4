@@ -86,5 +86,8 @@ ArbreCompact* initABRCrand(int n);
 Arbre* compactToSimple (ArbreCompact* a);
 ArbreCompact* simpleToCompact (Arbre* a);
 
+void freeSimple (Arbre* a);
+void freeCompact (ArbreCompact* a);
+
 
 #endif // TP4_H_INCLUDED
