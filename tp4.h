@@ -87,7 +87,9 @@ Arbre* compactToSimple (ArbreCompact* a);
 ArbreCompact* simpleToCompact (Arbre* a);
 
 void freeSimple (Arbre* a);
+void desallocationSimple (Sommet* s);
 void freeCompact (ArbreCompact* a);
+void desallocationCompact (SommetCompact* s);
 
 
 #endif // TP4_H_INCLUDED

@@ -23,10 +23,11 @@ Sommet* creerSommet(int cle){
 
 void afficherSommet(Sommet* s){
     if (s) {
+    printf("Sommet  : %p\n", s);
     printf("val : %d\n", s->val);
-    printf("pere : %d\n", s->pere);
-    printf("fils droit : %d\n", s->droit);
-    printf("fils gauche : %d\n\n", s->gauche);
+    printf("pere : %p\n", s->pere);
+    printf("fils droit : %p\n", s->droit);
+    printf("fils gauche : %p\n\n", s->gauche);
     }
 
     else
@@ -484,8 +485,10 @@ void interface(){
     }
 
     freeSimple(a);
+    printf("arbre simple libere\n");
     a = NULL;
     freeCompact(ac);
+    printf("arbre simple libere\n");
     ac = NULL;
 }
 
@@ -633,35 +636,85 @@ ArbreCompact* simpleToCompact (Arbre* a) {
 
 void freeSimple (Arbre* a) {
     if (!a)
-        return NULL;
+        return;
     if (!a->racine) {
         free(a);
     }
-    Sommet* temp = minimum(a->racine);
-    Sommet* a_sup;
-    while(temp != NULL){
-        a_sup = temp;
-        temp = successeur(a, temp);
-        free(a_sup);
-    }
+
+    desallocationSimple(minimum(a->racine));
 
     free(a);
-
 }
+
+void desallocationSimple (Sommet* s) {
+
+    if (s->gauche == NULL && s->droit == NULL && s->pere != NULL) {
+        Sommet* s2 = s->pere;
+        if (s == s2->droit)
+            s2->droit = NULL;
+        if (s == s2->gauche)
+            s2->gauche = NULL;
+        printf("sommet desalloue d'adresse %p et de valeur %d\n", s, s->val);
+        free(s);
+        desallocationSimple(s2);
+    }
+
+    else if (s->droit != NULL && s->pere == NULL) {
+        desallocationSimple(s->droit);
+    }
+
+    else if (s->gauche == NULL && s->droit == NULL && s->pere == NULL) {
+        printf("racine desalloue d'adresse %p et de valeur %d\n", s, s->val);
+        free(s);
+    }
+
+    else if (s->gauche != NULL) {
+        desallocationSimple(s->gauche);
+    }
+
+    else if(s->droit != NULL) {
+        desallocationSimple(s->droit);
+    }
+}
+
 void freeCompact (ArbreCompact* a) {
     if (!a)
-        return NULL;
+        return;
     if (!a->racine) {
         free(a);
     }
-    SommetCompact* temp = minimumC(a->racine);
-    SommetCompact* a_sup;
-    while(temp != NULL){
-        a_sup = temp;
-        temp = successeurC(a, temp);
-        free(a_sup);
-    }
+    desallocationCompact(minimumC(a->racine));
 
     free(a);
+}
+
+void desallocationCompact (SommetCompact* s) {
+    if (s->gauche == NULL && s->droit == NULL && s->pere != NULL) {
+        SommetCompact* s2 = s->pere;
+        if (s == s2->droit)
+            s2->droit = NULL;
+        if (s == s2->gauche)
+            s2->gauche = NULL;
+        printf("sommet desalloue d'adresse %p et de valeur %d\n", s, s->inf);
+        free(s);
+        desallocationCompact(s2);
+    }
+
+    else if (s->droit != NULL && s->pere == NULL) {
+        desallocationCompact(s->droit);
+    }
+
+    else if (s->gauche == NULL && s->droit == NULL && s->pere == NULL) {
+        printf("racine desalloue d'adresse %p et de valeur %d\n", s, s->inf);
+        free(s);
+    }
+
+    else if (s->gauche != NULL) {
+        desallocationCompact(s->gauche);
+    }
+
+    else if(s->droit != NULL) {
+        desallocationCompact(s->droit);
+    }
 
 }
