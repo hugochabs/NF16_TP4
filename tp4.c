@@ -251,9 +251,11 @@ int insererElement (int cle, ArbreCompact* a) {
         }
 
         else if (temp->inf > cle) {
+            temp2 = temp;
             temp = temp->gauche;
         }
         else if (temp->sup < cle) {
+            temp2 = temp;
             temp = temp->droit;
         }
     }
@@ -262,16 +264,6 @@ int insererElement (int cle, ArbreCompact* a) {
         SommetCompact* s = creerSommetCompact(cle);
         if(!s)
             return -1;
-        temp = a->racine;
-        while (temp != NULL) {
-            temp2 = temp;
-            if (temp->inf > cle) {
-                temp = temp->gauche;
-            }
-            else if (temp->sup < cle) {
-                temp = temp->droit;
-            }
-        }
 
         if (temp2->inf > cle) {
             s->pere = temp2;
