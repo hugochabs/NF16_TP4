@@ -23,11 +23,7 @@ Sommet* creerSommet(int cle){
 
 void afficherSommet(Sommet* s){
     if (s) {
-    printf("Sommet  : %p\n", s);
-    printf("val : %d\n", s->val);
-    printf("pere : %p\n", s->pere);
-    printf("fils droit : %p\n", s->droit);
-    printf("fils gauche : %p\n\n", s->gauche);
+    printf("- %d ", s->val);
     }
 
     else
@@ -102,7 +98,7 @@ int insererSommet(Arbre* a, Sommet* s){
     return 1;
 }
 
-void afficherArbre(Arbre* a){
+void afficherArbre(Arbre* a){ //utilisation du successeur
     if (!a || a->racine==NULL) {
         printf("arbre vide\n");
         return;
@@ -110,17 +106,22 @@ void afficherArbre(Arbre* a){
     Sommet* temp = minimum(a->racine);
     printf("Voici tous les elements de l'arbre %d\n", a);
     while(temp!=NULL){
-        if(temp->pere==NULL){
-            printf("Voici la racine de l'arbre :\n");
-            afficherSommet(temp);
-        }
-        else{
-            afficherSommet(temp);
-        }
+        afficherSommet(temp);
         temp = successeur(a, temp);
     }
+    printf("\n");
 }
 
+void afficherArbreBis(Sommet *s) { // parcours infixe
+    if (!s)
+        printf("arbre vide \n");
+     if (s->gauche)
+        afficherArbreBis(s->gauche);
+     afficherSommet(s);
+     if(s->droit)
+        afficherArbreBis(s->droit);
+
+}
 int tailleABR(Arbre* a){
     if (!a) {
         return 0;
@@ -286,7 +287,7 @@ void afficherSommetC(SommetCompact* s) {
     }
 }
 
-void afficherArbreC(ArbreCompact* a) {
+void afficherArbreC(ArbreCompact* a) { //utilisation du successeur
     if (!a || !a->racine) {
         printf("arbre vide\n");
     }
@@ -297,6 +298,16 @@ void afficherArbreC(ArbreCompact* a) {
         afficherSommetC(temp);
         temp = successeurC(a, temp);
     }
+}
+
+void afficherArbreCbis(SommetCompact* s) {  //parcours infixe
+    if (!s)
+        printf("arbre vide \n");
+     if (s->gauche)
+        afficherArbreCbis(s->gauche);
+     afficherSommetC(s);
+     if(s->droit)
+        afficherArbreCbis(s->droit);
 }
 
 int tailleABRC(ArbreCompact* a){
@@ -348,7 +359,7 @@ Arbre* initABRrand(int n){
     int i;
     srand(time(NULL));
     for (i=0; i<n; i++) {
-        tab[i] = rand();
+        tab[i] = rand()%30;
     }
     Arbre* a = initABR();
     Sommet* s;
@@ -385,7 +396,7 @@ ArbreCompact* initABRCrand(int n){
     int i;
     srand(time(NULL));
     for (i=0; i<n; i++) {
-        tab[i] = rand();
+        tab[i] = rand()%30;
     }
     ArbreCompact* a = initABRCompact();
 
@@ -419,14 +430,16 @@ void interface(){
             printf("Combien de sommet voulez-vous inserer : ");
             scanf("%d", &nb);
             a = initABR2(nb);
-            afficherArbre(a);
+            afficherArbreBis(a->racine);
+            printf("\n");
 
             break;
         case 2:
             printf("Combien de sommet voulez-vous inserer : ");
             scanf("%d", &nb);
             ac = initABRCompact2(nb);
-            afficherArbreC(ac);
+            afficherArbreCbis(ac->racine);
+            printf("\n");
 
             break;
 
@@ -434,26 +447,33 @@ void interface(){
             printf("Combien de sommet voulez-vous inserer : ");
             scanf("%d", &nb);
             a = initABRrand(nb);
-            afficherArbre(a);
+            afficherArbreBis(a->racine);
+            printf("\n");
             break;
 
         case 4:
             printf("Combien de sommet voulez-vous inserer : ");
             scanf("%d", &nb);
             ac = initABRCrand(nb);
-            afficherArbreC(ac);
+            afficherArbreCbis(ac->racine);
+            printf("\n");
             break;
 
         case 5 :
-            if(a)
-                afficherArbre(a);
+            if(a) {
+                //afficherArbre(a);
+                afficherArbreBis(a->racine);
+                printf("\n");
+            }
             else
                 printf("aucun arbre simple n'a ete initialise\n");
             break;
 
         case 6:
-            if(ac)
-                afficherArbreC(ac);
+            if(ac) {
+                afficherArbreCbis(ac->racine);
+                printf("\n");
+            }
             else
                 printf("aucun arbre compact n'a ete initialise\n");
             break;
@@ -503,20 +523,23 @@ void interfacebisA(Arbre* a){
             scanf("%d", &cle);
             s = creerSommet(cle);
             insererSommet(a, s);
-            afficherArbre(a);
+            afficherArbreBis(a->racine);
+            printf("\n");
             break;
         case 2:
             printf("entrez la cle de l'element que vous cherchez\n");
             scanf("%d", &cle);
             s = recherche(a->racine, cle);
             afficherSommet(s);
+            printf("\n");
             break;
         case 3:
             if (!ac) {
                 ac = initABRCompact();
                 ac = simpleToCompact(a);
             }
-            afficherArbreC(ac);
+            afficherArbreCbis(ac->racine);
+            printf("\n");
 
         case 4:
             if (!ac) {
@@ -555,20 +578,23 @@ void interfacebisAC(ArbreCompact* a) {
             printf("entrez la valeur de l'element a ajoute\n");
             scanf("%d", &cle);
             insererElement(cle, a);
-            afficherArbreC(a);
+            afficherArbreCbis(a->racine);
+            printf("\n");
             break;
         case 2:
             printf("entrez la valeur de l'element que vous cherchez\n");
             scanf("%d", &cle);
             s = rechercheCompact(a->racine, cle);
             afficherSommetC(s);
+            printf("\n");
             break;
         case 3:
             if (!as) {
                 as = initABR();
                 as = compactToSimple(a);
             }
-            afficherArbre(as);
+            afficherArbreBis(as->racine);
+            printf("\n");
         case 4:
             if (!as) {
                 as = initABR();

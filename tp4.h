@@ -34,6 +34,8 @@ int insererSommet(Arbre* a, Sommet* s);
 
 void afficherArbre(Arbre* a);
 
+void afficherArbreBis(Sommet *s);
+
 int tailleABR(Arbre* a);
 //--PARTIE B--//
 
