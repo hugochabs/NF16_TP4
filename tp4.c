@@ -80,7 +80,6 @@ int insererSommet(Arbre* a, Sommet* s){
     while(temp2!=NULL){
         temp1 = temp2;
         if(cle<temp2->val){
-            //printf("premier if\n");
             temp2=temp2->gauche;
         }
         else if(cle>temp2->val){
@@ -178,6 +177,17 @@ SommetCompact* minimumC(SommetCompact* s){
     return temp;
 }
 
+SommetCompact* maximumC(SommetCompact* s) {
+     if (!s) {
+        return NULL;
+    }
+
+    SommetCompact* temp = s;
+    while(temp->droit!=NULL)
+        temp=temp->droit;
+    return temp;
+}
+
 SommetCompact* rechercheC(SommetCompact* s, int inf, int sup){
     if(s==NULL || (s->inf==inf && s->sup == sup))
         return s;
@@ -198,6 +208,19 @@ SommetCompact* rechercheCompact(SommetCompact* s, int cle){
     if(cle > s->sup){
         return rechercheCompact(s->droit, cle);
     }
+}
+
+SommetCompact* predecesseurC(ArbreCompact* a, SommetCompact* s) {
+    SommetCompact* temp = s;
+    if (s->gauche) {
+        return maximumC(s->gauche);
+    }
+
+    while (temp->pere && (temp == temp->pere->gauche)) {
+        temp = temp->pere;
+    }
+
+    return temp->pere;
 }
 
 SommetCompact* successeurC(ArbreCompact* a, SommetCompact* s) {
@@ -275,7 +298,87 @@ int insererElement (int cle, ArbreCompact* a) {
             temp2->droit = s;
         }
     }
+    afficherArbreC(a);
     return 1;
+}
+
+ArbreCompact* compaction(ArbreCompact* a) {
+    /*SommetCompact* s = rechercheCompact(a->racine, cle);
+
+    if ((predecesseurC(a, s) && ((predecesseurC(a, s)->sup == s->inf) || (predecesseurC(a, s)->sup == s->inf -1))) ||
+        (successeurC(a, s) && ((successeurC(a, s)->inf == s->sup) || (successeurC(a, s)->inf == s->sup +1)))){
+        ArbreCompact* newA = initABRCompact();
+        SommetCompact* temp = minimumC(a->racine);
+        SommetCompact* s;
+        int inf, sup;
+        while(temp != NULL){
+            inf = temp->inf;
+            sup = temp->sup;
+            s = creerSommetCompact(inf);
+            insererSommet(newA, s);
+            s = creerSommetCompact(sup);
+            insererSommet(newA, s);
+            temp = successeurC(a, temp);
+        }
+            ArbreCompact* old = a;
+            a = newA;
+            freeCompact(old);
+            printf("fin free\n");
+
+        }
+
+return a;*/
+    SommetCompact* temp = minimum(a->racine);
+    SommetCompact* temp2;
+    while (temp != NULL) {
+        if (predecesseurC(a, temp) && ((predecesseurC(a, temp)->sup == temp->inf) || (predecesseurC(a, temp)->sup == temp->inf -1))) {
+                predecesseurC(a, temp)->sup = temp->sup;
+                temp2 = temp;
+                supprimerNoeud(a, temp2);
+
+        }
+        if (successeurC(a, temp) && ((successeurC(a, temp)->inf == temp->sup) || (successeurC(a, temp)->inf == temp->sup +1))){
+                successeurC(a, temp)->inf = temp->inf;
+                temp2 = temp;
+                supprimerNoeud(a, temp2);
+        }
+        temp = successeur(a, temp);
+    }
+
+}
+
+void supprimerNoeud(ArbreCompact* a, SommetCompact* s) {
+    SommetCompact* a_sup;
+
+    if(!s || !a) {
+        return NULL;
+    }
+
+    if (s->droit == NULL && s->gauche == NULL) {
+        s->pere = NULL;
+        a_sup = s;
+    }
+
+    else if(s->droit == NULL) {
+        s->pere->gauche = s->gauche;
+        a_sup = s;
+    }
+
+    else if (s->gauche == NULL) {
+        s->pere->droit = s->droit;
+        a_sup = s;
+    }
+
+    else {
+        SommetCompact* succ = successeurC(a, s);
+        a_sup = s;
+        s = succ;
+        supprimerNoeud(a, succ);
+
+    }
+
+    desallocationSimple(a_sup);
+
 }
 
 void afficherSommetC(SommetCompact* s) {
@@ -578,6 +681,7 @@ void interfacebisAC(ArbreCompact* a) {
             printf("entrez la valeur de l'element a ajoute\n");
             scanf("%d", &cle);
             insererElement(cle, a);
+            compaction(a);
             afficherArbreCbis(a->racine);
             printf("\n");
             break;

@@ -41,7 +41,10 @@ int main()
     insererElement(12, a);
 
     afficherArbreC(a);
-    printf("%d octets\n", tailleABRC(a));*/
+    SommetCompact* s = rechercheCompact(a->racine, 12);
+    afficherSommetC(s);
+    SommetCompact* s4 = predecesseurC(a, s);
+    afficherSommetC(s4);*/
 
     interface();
 

@@ -55,11 +55,15 @@ ArbreCompact* initABRCompact();
 
 SommetCompact* creerSommetCompact(int cle);
 
+SommetCompact* maximumC(SommetCompact* s);
+
 SommetCompact* minimumC(SommetCompact* s);
 
 SommetCompact* rechercheC(SommetCompact* s, int inf, int sup);
 
 SommetCompact* successeurC(ArbreCompact* a, SommetCompact* s);
+
+SommetCompact* predecesseurC(ArbreCompact* a, SommetCompact* s);
 
 int insererElement (int cle, ArbreCompact* a);
 
@@ -72,6 +76,10 @@ SommetCompact* rechercheC(SommetCompact* s, int inf, int sup);
 SommetCompact* rechercheCompact(SommetCompact* s, int cle);
 
 int tailleABRC(ArbreCompact* a);
+
+ArbreCompact* compaction(ArbreCompact* a);
+
+void supprimerNoeud(ArbreCompact* a ,SommetCompact* s);
 
 //--INTERFACE--//
 
