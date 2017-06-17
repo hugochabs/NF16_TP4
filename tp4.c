@@ -298,7 +298,6 @@ int insererElement (int cle, ArbreCompact* a) {
             temp2->droit = s;
         }
     }
-    afficherArbreC(a);
     return 1;
 }
 
@@ -348,37 +347,47 @@ return a;*/
 }
 
 void supprimerNoeud(ArbreCompact* a, SommetCompact* s) {
-    SommetCompact* a_sup;
+    SommetCompact* a_sup = NULL;
 
     if(!s || !a) {
         return NULL;
     }
 
-    if (s->droit == NULL && s->gauche == NULL) {
-        s->pere = NULL;
+    if (s->droit == NULL && s->gauche == NULL && s->pere != NULL) {
+        printf("entree if \n");
+        if(s == s->pere->droit){
+            s->pere->droit = NULL;
+        }
+        else if (s == s->pere->gauche) {
+            s->pere->gauche = NULL;
+        }
         a_sup = s;
     }
 
-    else if(s->droit == NULL) {
+    else if(s->droit == NULL && s->pere != NULL) {
+        printf("entree else if 1\n");
         s->pere->gauche = s->gauche;
         a_sup = s;
     }
 
-    else if (s->gauche == NULL) {
+    else if (s->gauche == NULL && s->pere != NULL) {
+        printf("entree else if 2\n");
         s->pere->droit = s->droit;
         a_sup = s;
     }
 
     else {
+        printf("entree else \n");
         SommetCompact* succ = successeurC(a, s);
-        a_sup = s;
-        s = succ;
+        if (s->pere && s->pere->droit == s)
+            s->pere->droit = succ;
+        else if(s->pere && s->pere->gauche == s)
+            s->pere->gauche = succ;
         supprimerNoeud(a, succ);
 
     }
 
-    desallocationSimple(a_sup);
-
+    free(a_sup);
 }
 
 void afficherSommetC(SommetCompact* s) {
