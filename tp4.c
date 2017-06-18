@@ -366,27 +366,38 @@ void supprimerNoeud(ArbreCompact* a, SommetCompact* s) {
 
     else if(s->droit == NULL && s->pere != NULL) {
         printf("entree else if 1\n");
-        s->pere->gauche = s->gauche;
+        if(s == s->pere->droit){
+            s->pere->droit = s->gauche;
+
+        }
+        else if (s == s->pere->gauche) {
+            s->pere->gauche = s->gauche;
+        }
+        s->gauche->pere = s->pere;
         a_sup = s;
     }
 
     else if (s->gauche == NULL && s->pere != NULL) {
         printf("entree else if 2\n");
-        s->pere->droit = s->droit;
+        if(s == s->pere->droit){
+            s->pere->droit = s->droit;
+        }
+        else if (s == s->pere->gauche) {
+            s->pere->gauche = s->droit;
+        }
+        s->droit->pere = s->pere;
         a_sup = s;
     }
 
     else {
         printf("entree else \n");
         SommetCompact* succ = successeurC(a, s);
-        if (s->pere && s->pere->droit == s)
-            s->pere->droit = succ;
-        else if(s->pere && s->pere->gauche == s)
-            s->pere->gauche = succ;
+        s->inf = succ->inf;
+        s->sup = succ->sup;
         supprimerNoeud(a, succ);
-
+        printf("retour à supprimer \n");
     }
-
+    //printf("desallocation de %d\n", a_sup->inf);
     free(a_sup);
 }
 

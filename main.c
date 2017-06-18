@@ -38,17 +38,19 @@ int main()
 
     insererElement(24, a);
     insererElement(31, a);
-    insererElement(12, a);
+    insererElement(18, a);
     insererElement(45, a);
     insererElement(32, a);
     insererElement(20, a);
-    insererElement(5, a);
-    insererElement(10, a);
+    /*insererElement(5, a);
+    insererElement(10, a);*/
 
     afficherArbreC(a);
-    SommetCompact* s = rechercheCompact(a->racine, 5);
-    afficherSommetC(s);
+    /*SommetCompact* s = rechercheCompact(a->racine, 56);
+    printf("debut suppression \n");
     supprimerNoeud(a, s);
+    printf("fin suppression \n");*/
+    insererElement(19, a);
     afficherArbreC(a);
 
     //interface();
