@@ -1,5 +1,8 @@
 #include "tp4.h"
 
+
+//using namespace std;
+
 //--PARTIE A--//
 
 Arbre* initABR(){
@@ -239,7 +242,6 @@ SommetCompact* successeurC(ArbreCompact* a, SommetCompact* s) {
         y=y->pere;
     }
     return y;
-
 }
 
 int insererElement (int cle, ArbreCompact* a) {
@@ -323,38 +325,37 @@ ArbreCompact* compaction(ArbreCompact* a) {
             a = newA;
             freeCompact(old);
             printf("fin free\n");
-
         }
 
 return a;*/
-    SommetCompact* temp = minimum(a->racine);
+    SommetCompact* temp = minimumC(a->racine);
     SommetCompact* temp2;
     while (temp != NULL) {
         if (predecesseurC(a, temp) && ((predecesseurC(a, temp)->sup == temp->inf) || (predecesseurC(a, temp)->sup == temp->inf -1))) {
+
                 predecesseurC(a, temp)->sup = temp->sup;
                 temp2 = temp;
+                temp = predecesseurC(a, temp2);
                 supprimerNoeud(a, temp2);
-
         }
-        if (successeurC(a, temp) && ((successeurC(a, temp)->inf == temp->sup) || (successeurC(a, temp)->inf == temp->sup +1))){
+
+        if (successeurC(a, temp) && (successeurC(a, temp)->inf == temp->sup || successeurC(a, temp)->inf == temp->sup +1)){
                 successeurC(a, temp)->inf = temp->inf;
                 temp2 = temp;
+                temp = successeurC(a, temp2);
                 supprimerNoeud(a, temp2);
         }
-        temp = successeur(a, temp);
+        temp = successeurC(a, temp);
     }
-
 }
 
 void supprimerNoeud(ArbreCompact* a, SommetCompact* s) {
     SommetCompact* a_sup = NULL;
-
     if(!s || !a) {
         return NULL;
     }
 
     if (s->droit == NULL && s->gauche == NULL && s->pere != NULL) {
-        printf("entree if \n");
         if(s == s->pere->droit){
             s->pere->droit = NULL;
         }
@@ -363,9 +364,7 @@ void supprimerNoeud(ArbreCompact* a, SommetCompact* s) {
         }
         a_sup = s;
     }
-
     else if(s->droit == NULL && s->pere != NULL) {
-        printf("entree else if 1\n");
         if(s == s->pere->droit){
             s->pere->droit = s->gauche;
 
@@ -378,7 +377,6 @@ void supprimerNoeud(ArbreCompact* a, SommetCompact* s) {
     }
 
     else if (s->gauche == NULL && s->pere != NULL) {
-        printf("entree else if 2\n");
         if(s == s->pere->droit){
             s->pere->droit = s->droit;
         }
@@ -390,14 +388,14 @@ void supprimerNoeud(ArbreCompact* a, SommetCompact* s) {
     }
 
     else {
-        printf("entree else \n");
+
         SommetCompact* succ = successeurC(a, s);
         s->inf = succ->inf;
         s->sup = succ->sup;
         supprimerNoeud(a, succ);
-        printf("retour à supprimer \n");
+
     }
-    //printf("desallocation de %d\n", a_sup->inf);
+
     free(a_sup);
 }
 
@@ -526,6 +524,7 @@ ArbreCompact* initABRCrand(int n){
     for (i=0; i<n; i++) {
         insererElement(tab[i], a);
     }
+    compaction(a);
 
     return a;
 }

@@ -9,14 +9,15 @@
 1495881775 source:c:\users\hunic\desktop\nf16\tp4\tp4.c
 	"tp4.h"
 
-1495967431 source:c:\users\hunic\desktop\nf16\depot\main.c
+1497807441 source:c:\users\hunic\desktop\nf16\depot\main.c
 	"tp4.h"
 
-1495968174 c:\users\hunic\desktop\nf16\depot\tp4.h
+1497728988 c:\users\hunic\desktop\nf16\depot\tp4.h
 	<stdio.h>
 	<stdlib.h>
+	<time.h>
 
-1495968341 source:c:\users\hunic\desktop\nf16\depot\tp4.c
+1497806953 source:c:\users\hunic\desktop\nf16\depot\tp4.c
 	"tp4.h"
 
 1497784268 source:c:\users\geerthana\documents\projets\p17\nf16\tp4\nf16_tp4\main.c
