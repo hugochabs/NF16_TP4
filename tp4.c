@@ -304,48 +304,27 @@ int insererElement (int cle, ArbreCompact* a) {
 }
 
 ArbreCompact* compaction(ArbreCompact* a) {
-    /*SommetCompact* s = rechercheCompact(a->racine, cle);
 
-    if ((predecesseurC(a, s) && ((predecesseurC(a, s)->sup == s->inf) || (predecesseurC(a, s)->sup == s->inf -1))) ||
-        (successeurC(a, s) && ((successeurC(a, s)->inf == s->sup) || (successeurC(a, s)->inf == s->sup +1)))){
-        ArbreCompact* newA = initABRCompact();
-        SommetCompact* temp = minimumC(a->racine);
-        SommetCompact* s;
-        int inf, sup;
-        while(temp != NULL){
-            inf = temp->inf;
-            sup = temp->sup;
-            s = creerSommetCompact(inf);
-            insererSommet(newA, s);
-            s = creerSommetCompact(sup);
-            insererSommet(newA, s);
-            temp = successeurC(a, temp);
-        }
-            ArbreCompact* old = a;
-            a = newA;
-            freeCompact(old);
-            printf("fin free\n");
-        }
-
-return a;*/
     SommetCompact* temp = minimumC(a->racine);
     SommetCompact* temp2;
     while (temp != NULL) {
         if (predecesseurC(a, temp) && ((predecesseurC(a, temp)->sup == temp->inf) || (predecesseurC(a, temp)->sup == temp->inf -1))) {
-
+                printf("pred\n");
                 predecesseurC(a, temp)->sup = temp->sup;
                 temp2 = temp;
-                temp = predecesseurC(a, temp2);
+                temp = successeurC(a, temp2);
                 supprimerNoeud(a, temp2);
         }
 
-        if (successeurC(a, temp) && (successeurC(a, temp)->inf == temp->sup || successeurC(a, temp)->inf == temp->sup +1)){
+        else if (successeurC(a, temp) && (successeurC(a, temp)->inf == temp->sup || successeurC(a, temp)->inf == temp->sup +1)){
+                printf("succ\n");
                 successeurC(a, temp)->inf = temp->inf;
                 temp2 = temp;
                 temp = successeurC(a, temp2);
                 supprimerNoeud(a, temp2);
         }
-        temp = successeurC(a, temp);
+        else
+            temp = successeurC(a, temp);
     }
 }
 
