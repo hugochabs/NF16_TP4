@@ -304,30 +304,7 @@ int insererElement (int cle, ArbreCompact* a) {
 }
 
 ArbreCompact* compaction(ArbreCompact* a) {
-    /*SommetCompact* s = rechercheCompact(a->racine, cle);
 
-    if ((predecesseurC(a, s) && ((predecesseurC(a, s)->sup == s->inf) || (predecesseurC(a, s)->sup == s->inf -1))) ||
-        (successeurC(a, s) && ((successeurC(a, s)->inf == s->sup) || (successeurC(a, s)->inf == s->sup +1)))){
-        ArbreCompact* newA = initABRCompact();
-        SommetCompact* temp = minimumC(a->racine);
-        SommetCompact* s;
-        int inf, sup;
-        while(temp != NULL){
-            inf = temp->inf;
-            sup = temp->sup;
-            s = creerSommetCompact(inf);
-            insererSommet(newA, s);
-            s = creerSommetCompact(sup);
-            insererSommet(newA, s);
-            temp = successeurC(a, temp);
-        }
-            ArbreCompact* old = a;
-            a = newA;
-            freeCompact(old);
-            printf("fin free\n");
-        }
-
-return a;*/
     SommetCompact* temp = minimumC(a->racine);
     SommetCompact* temp2;
     while (temp != NULL) {
@@ -441,10 +418,10 @@ int tailleABRC(ArbreCompact* a){
 
     int tArbre = sizeof(ArbreCompact);
     int tSommet = sizeof(SommetCompact);
-    int i=0;
-    SommetCompact* temp = minimum(a->racine);
-    while(temp!=NULL){
-        i++;
+    int i=1;
+    SommetCompact* temp = minimumC(a->racine);
+    while(temp  != NULL){
+        ++i;
         temp = successeurC(a, temp);
     }
     int taille = tSommet*i + tArbre;
